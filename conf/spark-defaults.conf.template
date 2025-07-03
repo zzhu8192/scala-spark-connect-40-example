@@ -1,0 +1,47 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+#
+
+# ============================================================================
+# Spark Connect Server Settings
+# ============================================================================
+# Default gRPC listening port for the Spark Connect Server
+spark.connect.grpc.binding.port             15002
+
+# Arrow batch sizing for Spark Connect dataframe streaming (64 MB)
+spark.connect.grpc.arrow.maxBatchSize       67108864
+
+# ============================================================================
+# Spark SQL & Catalog Configuration
+# ============================================================================
+spark.sql.catalogImplementation             hive
+spark.sql.adaptive.enabled                  true
+spark.sql.parquet.compression.codec         zstd
+
+# Local warehouse directory (adjust path to your preferred local directory)
+spark.sql.warehouse.dir                     /tmp/hive-warehouse
+
+# ============================================================================
+# Delta Lake Integration
+# ============================================================================
+# Enable Delta SQL parser extensions (MERGE INTO, VACUUM, RESTORE, etc.)
+spark.sql.extensions                        io.delta.sql.DeltaSparkSessionExtension
+
+# Delegate spark_catalog to DeltaCatalog for ACID table management
+spark.sql.catalog.spark_catalog             org.apache.spark.sql.delta.catalog.DeltaCatalog
+
+# ============================================================================
+# Remote Hive Metastore (Optional)
+# ============================================================================
+# If using a remote Hive Metastore Thrift service (e.g., via SSH tunnel or central server):
+# spark.hadoop.hive.metastore.uris          thrift://localhost:9083
+# spark.sql.warehouse.dir                   hdfs://namenode:8020/apps/hive/warehouse
+
+# ============================================================================
+# Memory & Performance Defaults (Sample Local Development Settings)
+# ============================================================================
+# spark.driver.memory                       4g
+# spark.executor.memory                     4g
+# spark.sql.shuffle.partitions              4

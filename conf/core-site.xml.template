@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Sample Hadoop / Hive Metastore core-site.xml for Apache Spark Connect Server.
+  Demonstrates connecting to a locally hosted, network-enabled Apache Derby
+  Metastore server (DRDA on port 1527) to allow concurrent multi-client Spark access.
+-->
+<configuration>
+    <!--
+      Derby Network Server Connection URL:
+      Connects over TCP to a standalone Derby network server instance (port 1527).
+      This avoids single-process file locks (db.lck) associated with embedded Derby.
+    -->
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:derby://127.0.0.1:1527/metastore;create=true</value>
+        <description>JDBC connection URL for the remote Hive Metastore database</description>
+    </property>
+
+    <!--
+      Derby Client JDBC Driver:
+      Requires derbyclient.jar on the Spark classpath (drop into $SPARK_HOME/jars).
+    -->
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>org.apache.derby.jdbc.ClientDriver</value>
+        <description>JDBC driver class name for Derby Network Client</description>
+    </property>
+
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>APP</value>
+        <description>Username for Hive Metastore connection</description>
+    </property>
+
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>mine</value>
+        <description>Password for Hive Metastore connection</description>
+    </property>
+</configuration>
